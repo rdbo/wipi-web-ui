@@ -18,13 +18,16 @@ export default function ProtectedRoute<S extends string>({ protection = "Authent
   const CheckAuth = (props: any) => {
     const location = useLocation();
     const navigate = useNavigate();
-    if (!isAuthenticated() && protection == "Authenticated" && location.pathname != "/login") {
-      navigate("/login");
-    }
 
-    if (isAuthenticated() && protection == "Unauthenticated" && location.pathname != "/") {
-      navigate("/");
-    }
+    createEffect(() => {
+      if (!isAuthenticated() && protection == "Authenticated" && location.pathname != "/login") {
+        navigate("/login");
+      }
+
+      if (isAuthenticated() && protection == "Unauthenticated" && location.pathname != "/") {
+        navigate("/");
+      }
+    });
 
     return (component ? component(props) : <></>);
   }

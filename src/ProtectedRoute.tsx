@@ -5,7 +5,7 @@ import { createEffect, createSignal } from "solid-js";
 export type RouteProtection = "Authenticated" | "Unauthenticated" | "Any";
 
 export interface IProtectedRoute<S extends string> extends RouteProps<S> {
-  protection: RouteProtection;
+  protection?: RouteProtection;
 }
 
 export default function ProtectedRoute<S extends string>({ protection = "Authenticated", children, component, ...rest}: IProtectedRoute<S>) {

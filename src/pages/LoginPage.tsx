@@ -4,14 +4,7 @@ import { createEffect } from "solid-js";
 
 export default function LoginPage() {
   let passwordElement! : HTMLInputElement;
-  const { signIn, authToken } = useAuth();
-  const navigate = useNavigate();
-
-  createEffect(() => {
-    if (authToken()) {
-      navigate("/");
-    }
-  })
+  const { signIn } = useAuth();
 
   const doSignIn = () => {
     const password = passwordElement.value;

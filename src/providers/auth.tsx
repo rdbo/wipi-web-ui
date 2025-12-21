@@ -38,13 +38,14 @@ export function AuthProvider(props: ParentProps) {
   };
 
   const signOut = async () => {
-    axios.post("/api/logout", {}, { headers: { 'Authorization': `Bearer ${authToken()}` } });
+    await axios.post("/api/logout");
     setAndPersistAuthToken(null);
   };
 
   onMount(() => { 
     const reqInterceptor = axios.interceptors.request.use(config => {
-      config.headers.Authorization = `Bearer ${authToken()}`;
+      if (authToken)
+        config.headers.Authorization = `Bearer ${authToken()}`;
       return config;
     });
 

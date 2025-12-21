@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse, HttpStatusCode } from "axios";
 import log from "loglevel";
-import { Accessor, createContext, createSignal, ParentProps, PropsWithChildren, useContext } from "solid-js";
+import { Accessor, createContext, createSignal, onCleanup, onMount, ParentProps, PropsWithChildren, useContext } from "solid-js";
 
 export interface ILoginRequest {
   password: string;
@@ -41,6 +41,31 @@ export function AuthProvider(props: ParentProps) {
     axios.post("/api/logout", {}, { headers: { 'Authorization': `Bearer ${authToken()}` } });
     setAndPersistAuthToken(null);
   };
+
+  onMount(() => { 
+    const reqInterceptor = axios.interceptors.request.use(config => {
+      config.headers.Authorization = `Bearer ${authToken()}`;
+      return config;
+    });
+
+    const respInterceptor = axios.interceptors.response.use(
+      resp => resp,
+      (error: AxiosError) => {
+        if (!error.response)
+          return error;
+
+        if (error.response.status == HttpStatusCode.Unauthorized) {
+          setAndPersistAuthToken(null);
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    onCleanup(() => {
+      axios.interceptors.request.eject(reqInterceptor);
+      axios.interceptors.response.eject(respInterceptor);
+    })
+  });
 
   return <AuthContext.Provider value={{signIn, signOut, authToken}}>
     {props.children}

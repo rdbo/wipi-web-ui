@@ -13,7 +13,7 @@ export interface IAuthContext {
 };
 
 interface ILoginResponse {
-  session_id: string;
+  auth_token: string;
 };
 
 const AuthContext = createContext<IAuthContext>();
@@ -34,10 +34,11 @@ export function AuthProvider(props: ParentProps) {
     log.info("Attempting sign in...");
     const response = await axios.post<ILoginResponse>("/api/login", request);
     log.info("Signed in successfully");
-    setAndPersistAuthToken(response.data.session_id);
+    setAndPersistAuthToken(response.data.auth_token);
   };
 
   const signOut = async () => {
+    axios.post("/api/logout", {}, { headers: { 'Authorization': `Bearer ${authToken()}` } });
     setAndPersistAuthToken(null);
   };
 

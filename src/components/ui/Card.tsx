@@ -1,7 +1,7 @@
 import { JSX, ParentProps } from "solid-js"
 
 export function Card({class: userClass, children, ...rest}: JSX.IntrinsicElements["div"]) {
-  const classAttr = "bg-white border-2 border-rose-600 w-96 rounded-lg px-2" + (userClass ? " " + userClass : "");
+  const classAttr = "bg-white border-2 border-gray-300 w-96 rounded-lg px-2" + (userClass ? " " + userClass : "");
   return <div class={classAttr} {...rest}>
     {children}
   </div>

@@ -10,6 +10,18 @@ export default function NavBar() {
         <img src="/assets/wipi.svg" class="h-8 w-8" />
         <h1 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">WiPi Web UI</h1>
       </A>
+      <div class="flex items-center justify-center gap-2">
+        <div class="items-center w-12 h-12 rounded-full border-2 border-rose-600 flex items-center justify-center">
+          <A href="/">
+            <img src="/assets/images/chart-line.svg" class="w-8"/>
+          </A>
+        </div>
+        <div class="items-center w-12 h-12 rounded-full border-2 border-rose-600 flex items-center justify-center">
+          <A href="/settings">
+            <img src="/assets/images/settings.svg" class="w-8"/>
+          </A>
+        </div>
+      </div>
       <div>
         <ThemeButton/>
       </div>

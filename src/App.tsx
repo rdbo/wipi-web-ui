@@ -14,7 +14,7 @@ const App: Component = () => {
   const Layout = (props: ParentProps) => {
     const { theme } = useTheme();
     return (<>
-      <div class="min-h-[100vh] bg-gray-50 text-slate-900" classList={{"!bg-gray-800 !text-slate-50": theme() == "dark"}}>
+      <div class="min-h-[100vh] bg-gray-50 text-slate-900" classList={{"!bg-gray-800 !text-slate-100": theme() == "dark"}}>
         <NavBar/>
         <main>
           {props.children}

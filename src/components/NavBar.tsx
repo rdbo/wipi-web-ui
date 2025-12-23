@@ -11,10 +11,10 @@ export default function NavBar() {
         <h1 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">WiPi Web UI</h1>
       </A>
       <div class="flex items-center justify-center gap-2 justify-self-center">
-        <A href="/" class="w-12 h-12 rounded-full border-2 border-rose-600 flex items-center justify-center hover:bg-rose-50 dark:hover:bg-gray-700 transition-colors">
+        <A href="/" class="w-12 h-12 rounded-full border-2 border-rose-600 flex items-center justify-center hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
           <img src="/assets/images/chart-line.svg" class="w-8" />
         </A>
-        <A href="/settings" class="w-12 h-12 rounded-full border-2 border-rose-600 flex items-center justify-center hover:bg-rose-50 dark:hover:bg-gray-700 transition-colors">
+        <A href="/settings" class="w-12 h-12 rounded-full border-2 border-rose-600 flex items-center justify-center hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
           <img src="/assets/images/settings.svg" class="w-8" />
         </A>
       </div>

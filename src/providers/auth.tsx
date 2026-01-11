@@ -41,13 +41,19 @@ export function AuthProvider(props: ParentProps) {
   };
 
   const signOut = async () => {
-    await axios.post("/api/logout");
+    // We manually pass the token so that we dont
+    // have to await for the post to finish in order
+    // to clear the token state
+    const token = authToken();
+    axios.post("/api/logout", null, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     setAndPersistAuthToken(null);
   };
 
   onMount(() => {
     const reqInterceptor = axios.interceptors.request.use(config => {
-      if (authToken)
+      if (authToken && !config.headers.Authorization)
         config.headers.Authorization = `Bearer ${authToken()}`;
       return config;
     });

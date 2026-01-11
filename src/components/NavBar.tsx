@@ -1,20 +1,24 @@
-import { A } from "@solidjs/router";
-import { useTheme } from "../providers/theme";
-import Button from "./ui/Button";
+import { A, useLocation } from "@solidjs/router";
 import ThemeButton from "./ThemeButton";
 import { For, Show } from "solid-js";
 import { useAuth } from "../providers/auth";
+import Cog from "lucide-solid/icons/cog";
+import ChartNoAxesCombined from "lucide-solid/icons/chart-no-axes-combined";
 
 export default function NavBar() {
   const { isAuthenticated } = useAuth();
+  const activeColor = "#da4242";
+  const inactiveColor = "#ca3232";
+  const location = useLocation();
+  location.pathname
   const routes = [
     {
       "path": "/",
-      "icon": "/assets/images/chart-line.svg"
+      "icon": <ChartNoAxesCombined stroke={activeColor}></ChartNoAxesCombined>
     },
     {
       "path": "/settings",
-      "icon": "/assets/images/settings.svg"
+      "icon": <Cog stroke={activeColor}></Cog>
     }
   ];
   return <nav class="sticky top-0 z-50 w-full bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-200">
@@ -29,7 +33,7 @@ export default function NavBar() {
             <For each={routes}>
               {(route) =>
                 <A href={route.path} class="w-12 h-12 rounded-full border-2 border-rose-600 flex items-center justify-center hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
-                  <img src={route.icon} class="w-8" />
+                  {route.icon}
                 </A>
               }
             </For>

@@ -21,6 +21,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.2",
     "loglevel": "^1.9.2",
+    "lucide-solid": "^0.562.0",
     "solid-js": "^1.9.5",
     "tailwindcss": "^4.1.18"
   }

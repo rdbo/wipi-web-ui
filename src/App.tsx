@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import ProtectedRoute from './ProtectedRoute';
 import Footer from './components/Footer';
 import { ThemeProvider } from './providers/theme';
+import SettingsPage from './pages/SettingsPage';
 
 const App: Component = () => {
   // TODO: Consider protecting routes on this Layout component
@@ -29,6 +30,7 @@ const App: Component = () => {
         <ThemeProvider>
           <Router root={Layout}>
             <ProtectedRoute path="/" component={HomePage} />
+            <ProtectedRoute path="/settings" component={SettingsPage} />
             <ProtectedRoute protection="Unauthenticated" path="/login" component={LoginPage} />
           </Router>
         </ThemeProvider>

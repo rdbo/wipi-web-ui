@@ -53,7 +53,7 @@ export function AuthProvider(props: ParentProps) {
 
   onMount(() => {
     const reqInterceptor = axios.interceptors.request.use(config => {
-      if (authToken && !config.headers.Authorization)
+      if (authToken() && !config.headers.Authorization)
         config.headers.Authorization = `Bearer ${authToken()}`;
       return config;
     });

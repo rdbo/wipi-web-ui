@@ -9,7 +9,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 /* Defaults */
 body {
   font-family: "InterVar";
@@ -17,4 +16,59 @@ body {
 
 button {
   @apply cursor-pointer select-none disabled:cursor-default disabled:pointer-events-none outline-none focus:outline-none;
+}
+
+/* Sigma Theme */
+html.sigma body,
+html.sigma .min-h-screen {
+  background-color: #101a20 !important;
+  color: #e2e8f0 !important;
+}
+
+html.sigma nav {
+  background-color: #101a20 !important;
+  border-bottom-color: #00ffd0 !important;
+}
+
+html.sigma .border-gray-200, 
+html.sigma .border-gray-700,
+html.sigma .border-rose-600,
+html.sigma .border-slate-600 {
+    border-color: #00ffd0 !important;
+}
+
+html.sigma .rounded-xl {
+    border-color: #00ffd0 !important;
+    background-color: #101a20 !important;
+    box-shadow: none !important;
+}
+
+html.sigma .bg-rose-600 {
+    background-color: #00ffd0 !important;
+    color: #101a20 !important;
+}
+
+html.sigma input {
+  border-color: #00ffd0 !important;
+  color: #00ffd0 !important;
+  caret-color: #00ffd0 !important;
+  background-color: #101a20 !important;
+}
+
+html.sigma input:focus {
+  border-color: #00ffd0 !important;
+  box-shadow: 0 0 0 1px #00ffd0 !important;
+}
+
+html.sigma input::placeholder {
+  color: rgba(0, 255, 208, 0.5) !important;
+}
+
+html.sigma label {
+  color: #00ffd0 !important;
+}
+
+html.sigma button:hover,
+html.sigma a:hover {
+     background-color: rgba(0, 255, 208, 0.1) !important;
 }

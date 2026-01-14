@@ -8,8 +8,8 @@ export default function LoginPage() {
   let passwordElement!: HTMLInputElement;
   const { signIn } = useAuth();
 
-  const doSignIn = () => {
-    window.event?.preventDefault();
+  const doSignIn = (e: Event) => {
+    e.preventDefault();
     const password = passwordElement.value;
     signIn({ password });
   }
@@ -29,3 +29,4 @@ export default function LoginPage() {
     </Card>
   </div>
 }
+

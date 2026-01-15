@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createSignal } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import log from "loglevel";
 
 interface NetlinkInterface {
@@ -22,7 +22,9 @@ export default function SettingsPage() {
     setInterfaces(response.data.interfaces)
   }
 
-  updateInterfaces();
+  onMount(() => {
+    updateInterfaces();
+  });
   return <div class="space-y-6">
     <div class="flex items-center justify-between">
       <h2 class="text-3xl font-bold tracking-tight">Settings</h2>

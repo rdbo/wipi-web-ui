@@ -51,7 +51,6 @@ export function AuthProvider(props: ParentProps) {
     setAndPersistAuthToken(null);
   };
 
-  onMount(() => {
     const reqInterceptor = axios.interceptors.request.use(config => {
       if (authToken() && !config.headers.Authorization)
         config.headers.Authorization = `Bearer ${authToken()}`;
@@ -74,8 +73,7 @@ export function AuthProvider(props: ParentProps) {
     onCleanup(() => {
       axios.interceptors.request.eject(reqInterceptor);
       axios.interceptors.response.eject(respInterceptor);
-    })
-  });
+    });
 
   return <AuthContext.Provider value={{ signIn, signOut, isAuthenticated }}>
     {props.children}

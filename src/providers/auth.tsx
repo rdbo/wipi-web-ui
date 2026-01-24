@@ -51,30 +51,28 @@ export function AuthProvider(props: ParentProps) {
     setAndPersistAuthToken(null);
   };
 
-  onMount(() => {
-    const reqInterceptor = axios.interceptors.request.use(config => {
-      if (authToken() && !config.headers.Authorization)
-        config.headers.Authorization = `Bearer ${authToken()}`;
-      return config;
-    });
+  const reqInterceptor = axios.interceptors.request.use(config => {
+    if (authToken() && !config.headers.Authorization)
+      config.headers.Authorization = `Bearer ${authToken()}`;
+    return config;
+  });
 
-    const respInterceptor = axios.interceptors.response.use(
-      resp => resp,
-      (error: AxiosError) => {
-        if (!error.response)
-          return error;
+  const respInterceptor = axios.interceptors.response.use(
+    resp => resp,
+    (error: AxiosError) => {
+      if (!error.response)
+        return error;
 
-        if (error.response.status == HttpStatusCode.Unauthorized) {
-          setAndPersistAuthToken(null);
-        }
-        return Promise.reject(error);
+      if (error.response.status == HttpStatusCode.Unauthorized) {
+        setAndPersistAuthToken(null);
       }
-    );
+      return Promise.reject(error);
+    }
+  );
 
-    onCleanup(() => {
-      axios.interceptors.request.eject(reqInterceptor);
-      axios.interceptors.response.eject(respInterceptor);
-    })
+  onCleanup(() => {
+    axios.interceptors.request.eject(reqInterceptor);
+    axios.interceptors.response.eject(respInterceptor);
   });
 
   return <AuthContext.Provider value={{ signIn, signOut, isAuthenticated }}>

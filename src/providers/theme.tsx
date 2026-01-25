@@ -1,4 +1,3 @@
-import axios, { AxiosError, AxiosResponse, HttpStatusCode } from "axios";
 import log from "loglevel";
 import { Accessor, createComputed, createContext, createEffect, createMemo, createSignal, onCleanup, onMount, ParentProps, PropsWithChildren, Setter, useContext } from "solid-js";
 

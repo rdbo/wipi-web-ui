@@ -1,6 +1,6 @@
-import axios from "axios";
 import { createSignal } from "solid-js";
 import log from "loglevel";
+import { useAuth } from "../providers/auth";
 
 interface NetlinkInterface {
   name: string;
@@ -11,11 +11,12 @@ interface IInterfacesResponse {
 };
 
 export default function SettingsPage() {
+  const { apiHttpClient } = useAuth();
   const [interfaces, setInterfaces] = createSignal([]);
 
   const updateInterfaces = async () => {
     log.info("Attempting to fetch interfaces...");
-    const response = await axios.post("/api/net/interfaces");
+    const response = await apiHttpClient.post("/net/interfaces");
     log.info("Fetched interfaces successfully");
     log.info(response);
 

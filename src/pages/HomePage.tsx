@@ -2,12 +2,11 @@ import { useNavigate } from "@solidjs/router";
 import Button from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import { useAuth } from "../providers/auth";
-import axios from "axios";
 
 export default function HomePage() {
-  const { signOut } = useAuth();
+  const { signOut, apiHttpClient } = useAuth();
   const checkAuth = async () => {
-    axios.post("/api/auth_status").then(() => {
+    apiHttpClient.post("/auth_status").then(() => {
       alert("Authentication status is OK");
     }, () => {
       alert("Authentication is bad");

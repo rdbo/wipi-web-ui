@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse, HttpStatusCode } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosResponse, HttpStatusCode } from "axios";
 import log from "loglevel";
 import { Accessor, createComputed, createContext, createMemo, createSignal, onCleanup, onMount, ParentProps, PropsWithChildren, useContext } from "solid-js";
 
@@ -10,6 +10,7 @@ export interface IAuthContext {
   signIn: (request: ILoginRequest) => Promise<void>;
   signOut: () => void;
   isAuthenticated: Accessor<boolean | null>
+  apiHttpClient: AxiosInstance
 };
 
 interface ILoginResponse {
@@ -28,10 +29,10 @@ export function AuthProvider(props: ParentProps) {
     } else {
       localStorage.removeItem(authTokenEntry);
     }
-  }
+  };
   const isAuthenticated = createMemo(() => {
     return authToken() != null;
-  })
+  });
 
   const signIn = async (request: ILoginRequest): Promise<void> => {
     log.info("Attempting sign in...");
@@ -51,13 +52,17 @@ export function AuthProvider(props: ParentProps) {
     setAndPersistAuthToken(null);
   };
 
-  const reqInterceptor = axios.interceptors.request.use(config => {
+  const apiHttpClient = axios.create({
+    baseURL: `${window.location.origin}/api`,
+  })
+
+  apiHttpClient.interceptors.request.use(config => {
     if (authToken() && !config.headers.Authorization)
       config.headers.Authorization = `Bearer ${authToken()}`;
     return config;
   });
 
-  const respInterceptor = axios.interceptors.response.use(
+  apiHttpClient.interceptors.response.use(
     resp => resp,
     (error: AxiosError) => {
       if (!error.response)
@@ -70,12 +75,13 @@ export function AuthProvider(props: ParentProps) {
     }
   );
 
-  onCleanup(() => {
-    axios.interceptors.request.eject(reqInterceptor);
-    axios.interceptors.response.eject(respInterceptor);
-  });
+  // Check authentication status when the
+  // AuthProvider loads for the first time
+  // If the authentication is bad, it will
+  // automatically clear the token.
+  apiHttpClient.post('/auth_status').then();
 
-  return <AuthContext.Provider value={{ signIn, signOut, isAuthenticated }}>
+  return <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, apiHttpClient }}>
     {props.children}
   </AuthContext.Provider>;
 }

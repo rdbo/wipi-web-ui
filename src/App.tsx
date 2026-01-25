@@ -30,15 +30,15 @@ const App: Component = () => {
 
   return (
     <main>
-      <AuthProvider>
-        <ThemeProvider>
+      <ThemeProvider>
+        <AuthProvider>
           <Router root={Layout}>
             <ProtectedRoute path="/" component={HomePage} />
             <ProtectedRoute path="/settings" component={SettingsPage} />
             <ProtectedRoute protection="Unauthenticated" path="/login" component={LoginPage} />
           </Router>
-        </ThemeProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </main>
   );
 };
